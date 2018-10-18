@@ -16,10 +16,12 @@ class XMLEditor extends Component {
 
         onChange = (newValue) => {
             console.log("Edit: " + newValue);
-            const store = this.props.model;
-            console.log("store:" + store );
-            store.xmlContent = newValue;
-            store.isWellFormed = store.parseContent(newValue)
+            //const store = this.props.model;
+            //console.log("store:" + store );
+            //store.xmlContent = newValue;
+            //store.isWellFormed = store.parseContent(newValue)
+            this.props.model.xmlContent = newValue;
+            //this.props.model.isWellFormed = this.props.model.parseContent(newValue);
         }
 
         render() {

@@ -1,0 +1,31 @@
+$color_tag: darkcyan;
+$color_attribute_equal: chocolate;
+$color_attribute_name:  blue;
+._element_ {
+  display: table;
+  border: 1px solid darkslategray;
+  margin-top: 10px;
+  margin-left: 4em;
+  padding: 3px;
+  ._open_tag_ {
+    color: $color_tag;
+    ._attribute_name_{
+      color: $color_attribute_name;
+    }
+    ._attribute_equal {
+      color: $color_attribute_equal;
+    }
+    ._attribute_quote {
+      color: crimson;
+    }
+
+  }
+  ._close_tag_ {
+    color: $color_tag;
+  }
+
+  ._text_ {
+    white-space: pre-wrap;
+    background: gainsboro;
+  }
+}
