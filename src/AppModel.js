@@ -50,6 +50,19 @@ class AppModel {
         }
     }
 
+    /**
+     * liste d'id des éléments correspondant au xpath
+     */
+
+    get idList() {
+
+    }
+
+    updateTreeView() {
+        if (this.xpathExpression !== '') {
+            console.log("xpath expression :" + this.xpathExpression);
+        }
+    }
 
 }
 
@@ -57,9 +70,11 @@ class AppModel {
 decorate(AppModel, {
     xmlContent: observable,
     xmlDom: computed,
+    idList: computed,
     xpathExpression: observable,
     xmlError: computed,
     treeView: computed,
+    updateTreeView: action,
 });
 
 export default AppModel;
