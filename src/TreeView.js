@@ -24,7 +24,7 @@ const TreeView = observer(
                     <Label empty={true} color={this.props.model.xmlError === null ? 'green' : 'red'}></Label>
 
                     <div id="xml-tree-view">
-                        <TreeViewInner xmlDom={xmlDom}/>
+                        <TreeViewInner xmlDom={xmlDom} model={this.props.model}/>
                     </div>
 
                 </div>
@@ -35,6 +35,6 @@ const TreeView = observer(
 
 function TreeViewInner(props) {
     let xmlDom = props.xmlDom;
-    return (xmlDom != null ? processElement(xmlDom) : 'empty')
+    return (xmlDom != null ? processElement(xmlDom.documentElement,props.model) : 'empty')
 }
 export default TreeView;

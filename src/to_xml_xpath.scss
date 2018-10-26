@@ -1,6 +1,7 @@
 $color_tag: darkcyan;
 $color_attribute_equal: chocolate;
 $color_attribute_name:  blue;
+$color_text_bg: gainsboro;
 ._element_ {
   display: table;
   border: 1px solid darkslategray;
@@ -26,6 +27,14 @@ $color_attribute_name:  blue;
 
   ._text_ {
     white-space: pre-wrap;
-    background: gainsboro;
+    border: 1px dotted $color_text_bg;
   }
+}
+
+._current_node_ {
+  border: 2px solid chartreuse;
+}
+
+._addressed_node_ {
+  background: #FFE623;
 }

@@ -7,6 +7,8 @@ import AppModel from './AppModel';
 import DevTools from 'mobx-react-devtools';
 import TreeView from "./TreeView";
 import XMLErrorPrinter from  "./XMLErrorPrinter";
+import XPathErrorPrinter from  "./XPathErrorPrinter";
+import XPathResultPrinter from  "./XPathResultPrinter";
 
 const appStore= new AppModel();
 
@@ -26,6 +28,8 @@ class App extends Component {
             </section>
             <section className="xpath-viewer">
                 <XPathForm model={appStore}/>
+                <XPathErrorPrinter model={appStore}/>
+                <XPathResultPrinter model={appStore}/>
                 <TreeView model={appStore}/>
             </section>
         </div>;

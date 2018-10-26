@@ -18,16 +18,15 @@ const XPathForm = observer(
 
         handleChange(event) {
             this.props.model.xpathExpression = event.target.value;
-
         }
 
         render() {
             const xpathvalue = this.props.model.xpathExpression;
             return (
                 <form>
-                    <Input focus className="xpath-form-input" name="xpath-input" placeholder="Enter XPath 1.0 expression" value={xpathvalue} onChange={this.handleChange}>
+                    <Input focus className="xpath-form-input" name="xpath-input" placeholder="Enter XPath 1.0 expression" value={xpathvalue} onChange={this.handleChange} disabled={this.props.model.xmlError === null ? false : true} >
                     </Input>
-                    <Button disabled={this.props.model.xmlError === null ? false : true} circular={true} content={"Submit"} onClick={() => this.onPress()}></Button>
+
                 </form>
             )
         }

@@ -17,7 +17,7 @@ export default class XMLParser{
         if (node.namespaceURI === 'http://www.mozilla.org/newlayout/xml/parsererror.xml') {
             return [serializer.serializeToString(node),null]
         } else {
-            return [null,node]
+            return [null,doc]
         }
     }
 

@@ -1,25 +1,21 @@
 import React, {Component} from 'react';
-import {observer} from "mobx-react";
+import TreeViewActive from "./TreeViewActive";
 
-const TreeViewAttribute = observer(
-    class TreeViewAttribute extends Component {
-        constructor(props) {
-            super(props);
-        }
 
-        render() {
-            const nodeName = this.props.nodeName;
-            const value = this.props.value;
-            return (
-                <span className="_attribute_" id={nodeName}>
-                    <span> </span>
-                    <span className="_attribute_name_">{nodeName}</span>
-                    <span className="_attribute_equal">=</span>
-                    <span className="_attribute_quote">"</span>{value}<span className="_attribute_quote">"</span>
-                </span>
-            )
-        }
+class TreeViewAttribute extends Component {
+
+    render() {
+        let cssClass = '_element_name_';
+        const value = this.props.node.value;
+        return (
+            <TreeViewActive cssClass={cssClass} node={this.props.node} model={this.props.model}>
+                <span> {this.props.node.name}</span>
+                <span className="_attribute_equal">=</span>
+                <span className="_attribute_quote">"</span>{value}<span className="_attribute_quote">"</span>
+            </TreeViewActive>
+        )
     }
-)
+}
+
 
 export default TreeViewAttribute;

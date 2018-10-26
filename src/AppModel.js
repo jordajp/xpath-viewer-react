@@ -10,6 +10,9 @@ class AppModel {
     xpathExpression = '';
     toXmlWithIds = null;
     toTreeView = null;
+    currentNode = null;
+    xpathResultNodes = [];
+    xpathResultValue = null;
 
     constructor() {
         this.toXmlWithIds = new XSLTransformer('id_setter.xsl');
@@ -23,58 +26,73 @@ class AppModel {
         }
     }
 
-    get treeView() {
-        if (this.xmlError != null) {
-            return '';
-        } else {
-            let [err,xmldoc] = xmlParser.parseContent(this.xmlContent);
-            console.log(`the dom : ${this.xmlDom}`)
-            const docWithId = this.toXmlWithIds.transform(this.xmlDom);
-            var oSerializer = new XMLSerializer();
-            const treeHtml = this.toTreeView.transform(docWithId);
-            return oSerializer.serializeToString(treeHtml);
-        }
-    }
-
     get xmlError() {
         let [err,doc] = xmlParser.parseContent(this.xmlContent);
+        const xpathExp = this.xpathExpression;
         this.doc = (doc ? doc : null);
         return err;
     }
 
     get xmlDom() {
         if (this.xmlContent) {
-            return this.doc;
+             return this.doc;
         } else {
             return null;
         }
     }
 
-    /**
-     * liste d'id des éléments correspondant au xpath
-     */
-
-    get idList() {
-
-    }
-
-    updateTreeView() {
-        if (this.xpathExpression !== '') {
-            console.log("xpath expression :" + this.xpathExpression);
+    get xpathResult() {
+        let result = {
+          "error": null,
+          "nodes": [],
+          value: null
+        };
+        if (this.xpathExpression === '' || this.xmlDom === null) {
+            return result;
         }
+        let contextNode = (this.currentNode === null ? this.xmlDom : this.currentNode);
+        let xpathResult = null;
+        try {
+             xpathResult = this.xmlDom.evaluate(this.xpathExpression,contextNode,null,XPathResult.ANY_TYPE,null);
+        } catch (e) {
+            console.log(e)
+            result.error = "XPATH error: " + e.message;
+            return result;
+        }
+        if (xpathResult.resultType === XPathResult.UNORDERED_NODE_ITERATOR_TYPE) {
+            let cNode = xpathResult.iterateNext();
+            while (cNode) {
+                result.nodes.push(cNode);
+                cNode = xpathResult.iterateNext();
+            }
+        } else {
+            switch (xpathResult.resultType) {
+                case XPathResult.BOOLEAN_TYPE:
+                    result.value = xpathResult.booleanValue;
+                    break;
+                case XPathResult.NUMBER_TYPE:
+                    result.value = xpathResult.numberValue;
+                    break;
+                case XPathResult.STRING_TYPE:
+                    result.value = xpathResult.stringValue;
+                    break;
+                default:
+                    // ne devrait pas arriver...
+                    result.value = null;
+            }
+        }
+        return result;
     }
-
 }
 
 
 decorate(AppModel, {
     xmlContent: observable,
+    currentNode: observable,
     xmlDom: computed,
-    idList: computed,
     xpathExpression: observable,
     xmlError: computed,
-    treeView: computed,
-    updateTreeView: action,
+    xpathResult: computed,
 });
 
 export default AppModel;

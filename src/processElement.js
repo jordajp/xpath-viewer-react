@@ -3,7 +3,7 @@ import TreeViewElement from  './TreeViewElement';
 import TreeViewAttribute from  './TreeViewAttribute';
 import TreeViewText from "./TreeViewText";
 
-const processElement = function processElement(node) {
+const processElement = function processElement(node,model) {
     let children = null;
     let attributes = null;
     let childrenComp = [];
@@ -12,7 +12,7 @@ const processElement = function processElement(node) {
         attributes = node.attributes;
         for (let i=0 ; i < attributes.length ; i++) {
             console.log("process " + attributes[i].name);
-            attrComp.push(React.createElement(TreeViewAttribute, {nodeName: attributes[i].localName, value: attributes[i].value}))
+            attrComp.push(React.createElement(TreeViewAttribute, {node: attributes[i], model: model}))
         }
     }
     if (node.hasChildNodes()) {
@@ -23,15 +23,15 @@ const processElement = function processElement(node) {
             console.log("node type : " + nType);
             if (nType === Node.TEXT_NODE) {
                 console.log("process text node");
-                childrenComp.push(React.createElement(TreeViewText, {value: children[i].textContent}));
+                childrenComp.push(React.createElement(TreeViewText, {node: children[i],  model: model}));
             } else if (nType === Node.ELEMENT_NODE) {
-                childrenComp.push(processElement(children[i]))
+                childrenComp.push(processElement(children[i],model))
             } else {
                 // ignore it
             }
         }
     }
-    return React.createElement(TreeViewElement, {nodeName: node.tagName, attributes: attrComp},childrenComp)
+    return React.createElement(TreeViewElement, {node: node, attributes: attrComp,  model: model},childrenComp)
 
 }
 
