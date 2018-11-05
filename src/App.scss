@@ -24,7 +24,22 @@
   color: #61dafb;
 }
 
+.App-editor {
+
+}
+.App-Tree-View {
+    border-left: 1px solid #C0C1C2;
+}
+.xml-view {
+  display: flex;
+  > *  {
+    flex: 1 1 0;
+  }
+
+}
 .tree-view {
+  display: inline-block;
+  width: 0.5vw;
   background: #eeeeee;
   min-height: 10vh;
 

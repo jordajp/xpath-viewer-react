@@ -22,15 +22,21 @@ class App extends Component {
                 <h1>An XPath tester</h1>
             </header>
              <DevTools />
-            <section className="App-Editor">
-                <XMLEditor model={appStore}/>
-                <XMLErrorPrinter model={appStore}/>
+            <section className="xml-view">
+                <section className="App-Editor">
+                    <XMLEditor model={appStore}/>
+                    <XMLErrorPrinter model={appStore}/>
+                </section>
+                <section className="App-Tree-View">
+                    <XPathForm model={appStore}/>
+                    <TreeView model={appStore}/>
+                </section>
             </section>
+
             <section className="xpath-viewer">
-                <XPathForm model={appStore}/>
+
                 <XPathErrorPrinter model={appStore}/>
                 <XPathResultPrinter model={appStore}/>
-                <TreeView model={appStore}/>
             </section>
         </div>;
     }
